@@ -289,6 +289,7 @@ if(!$zblocks = call_user_func(function() use(&$conf){
 	$tc = ob_get_clean(); 
 }
 
+$conf["content"] = preg_replace("#\{(block:[\w_-]+)\}#iu","<!-- [$1] -->",$conf["content"]);
 if(array_key_exists('null', $_GET)){ echo $conf["content"];
 }elseif(!$conf["content"] = str_replace('<!-- [modules] -->', $conf["content"], $tc)){ mpre("Ошибка замены содержимого модуля");
 }elseif(!$conf["content"] = strtr($conf["content"], (array)$zblocks)){ mpre("Ошибка установки содержимоого блоков");
