@@ -7,7 +7,7 @@ if($canonical){ # Нет мета или обновление категории
 }elseif(!$seo_cat = fk("{$conf['db']['prefix']}seo_cat", $w = ["alias"=>$alias], $w += ["name"=>$cat_name], $w)){ mpre("Ошибка добавления категория переадресации", $w);
 }elseif($seo_cat['hide'] !== "0"){// mpre("Категория скрыта");
 }elseif(!$settings = mpzam($conf['settings'], "settings")){ mpre("Ошибка формирования системных переменных");
-}elseif(!$lang = ((strpos($_SERVER['HTTP_HOST'], "xn--") === 0) ? "Русские" : "Английские")){ mpre("Определение языка сайта");
+}elseif(!$lang = get($conf,'settings','seo_lang')?:((strpos($_SERVER['HTTP_HOST'], "xn--") === 0) ? "Русские" : "Английские")){ mpre("Определение языка сайта");
 }elseif(!$characters_lang = rb("seo-characters_lang", "name", $w = "[{$lang}]")){ mpre("Не найдены данные перекодировки {$w}");
 }elseif(!$CHARACTERS = array_column(rb("seo-characters", "characters_lang_id", "id", "[{$characters_lang['id']},0,NULL]"), "to", "from")){ mpre("Не установлена таблица перекодировки <a href='/seo:admin/r:mp_seo_characters'>seo_characters</a>");
 }elseif(!$href = $seo_cat['href']){ mpre("Не задан адрес ссылки <a href='/seo:admin/r:{$conf['db']['prefix']}seo_cat?&where[id]={$seo_cat['id']}'>{$seo_cat['name']}</a>");
